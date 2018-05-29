@@ -12,16 +12,18 @@ from networktables import NetworkTables
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
+cameraid = 1
+
 accu = 10 #how much of a buffer on detect?
-deadzone = 70 #deadzone on eather side of center (in pixels)
-ranget = 0.4 #range on speed
-rangeb = -0.4 #range on speed
+deadzone = 10 #deadzone on eather side of center (in pixels)
+ranget = 0.8 #range on speed
+rangeb = -0.8 #range on speed
 # size 0-600
 
 m = interp1d([0, 600], [rangeb, ranget])
 r = range((300 - deadzone +1), (300 + deadzone +1))
 
-ip = "172.16.10.109"
+ip = "10.50.24.2"
 
 NetworkTables.initialize(server=ip)
 
@@ -29,7 +31,7 @@ NetworkTables.initialize()
 sd = NetworkTables.getTable("SmartDashboard")
 
 def sendc(x):
-    sd.putNumber('camx', x)
+    sd.putNumber('camx', (x * 100 ))
 
 def calcSpeed(x, notav):
     if(notav == 0):
@@ -61,7 +63,7 @@ greenUpper = (64, 255, 255)
 pts = deque(maxlen=args["buffer"])
 
 
-vs = VideoStream(src=0).start()
+vs = VideoStream(src=cameraid).start()
 
 # allow the camera to warm up
 time.sleep(2.0)
