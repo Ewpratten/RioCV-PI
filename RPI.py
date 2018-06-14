@@ -43,10 +43,7 @@ ap.add_argument("-c", "--camera", type=int, default=camera_id,  help="Camera Por
 args = vars(ap.parse_args())
 
 # Create the Mjpg server URL from data above
-# server  = "http://"
-# server += args["ip"]
-# server += "/stream.mjpg"
-server = "http://localhost:2015/getframe.php"
+server = "http://localhost:2081/getframe.php"
 
 # Enable logging to stdout & Initialize NetworkTables
 logging.basicConfig(level=logging.DEBUG)      # Set logging mode
