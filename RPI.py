@@ -12,6 +12,7 @@ from imutils.video import VideoStream
 import argparse
 import cv2
 import imutils
+import numpy as np
 import time
 import urllib.request
 from scipy.interpolate import interp1d
@@ -23,7 +24,7 @@ import logging
 is_logging =  True         # Setting to False will speed up program
 ip_address = "10.50.24.2"  # Default IP address of RoboRIO
 camera_id  =  0            # Default camera id
-speed      =  0.535        # How fast should the robot move forward? (ranges from -1.0 to +1.0)
+speed      =  0.4 #0.535        # How fast should the robot move forward? (ranges from -1.0 to +1.0)
 accuracy   =  10           # How confident should the robot be before locking on to an object? (ranges from 0 to camera height)
 deadzone   =  5            # Deadzone around center of camera in pixels
 max_range  =  0.8          # Max speed
@@ -42,9 +43,10 @@ ap.add_argument("-c", "--camera", type=int, default=camera_id,  help="Camera Por
 args = vars(ap.parse_args())
 
 # Create the Mjpg server URL from data above
-server  = "http://"
-server += args["ip"]
-server += "/stream.mjpg"
+# server  = "http://"
+# server += args["ip"]
+# server += "/stream.mjpg"
+server = "http://localhost:2015/getframe.php"
 
 # Enable logging to stdout & Initialize NetworkTables
 logging.basicConfig(level=logging.DEBUG)      # Set logging mode
